@@ -1,0 +1,25 @@
+{
+  "name": "mongo-scheduler-api",
+  "version": "1.0.0",
+  "description": "Backend API for Mongo Scheduler UI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darshanpatel14/mongo-job-scheduler-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/darshanpatel14/mongo-job-scheduler-api/issues"
+  },
+  "homepage": "https://github.com/darshanpatel14/mongo-job-scheduler-api#readme",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongo-job-scheduler": "^0.1.10",
+    "mongodb": "^6.3.0"
+  }
+}
