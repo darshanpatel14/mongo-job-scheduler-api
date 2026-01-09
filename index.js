@@ -162,7 +162,8 @@ app.delete("/jobs/:id", async (req, res) => {
 // Create a new job
 app.post("/jobs", async (req, res) => {
   try {
-    const { name, data, runAt, repeat, retry } = req.body;
+    const { name, data, runAt, repeat, retry, priority, concurrency } =
+      req.body;
 
     const job = await scheduler.schedule({
       name,
@@ -170,6 +171,8 @@ app.post("/jobs", async (req, res) => {
       runAt: runAt ? new Date(runAt) : undefined,
       repeat,
       retry,
+      priority,
+      concurrency,
     });
 
     res.status(201).json(job);
@@ -183,7 +186,7 @@ app.post("/jobs", async (req, res) => {
 app.put("/jobs/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { data, repeat, runAt, retry } = req.body;
+    const { data, repeat, runAt, retry, priority, concurrency } = req.body;
 
     // Check if job exists
     const existingJob = await scheduler.getJob(new ObjectId(id));
@@ -195,6 +198,8 @@ app.put("/jobs/:id", async (req, res) => {
     if (data !== undefined) updates.data = data;
     if (repeat !== undefined) updates.repeat = repeat;
     if (retry !== undefined) updates.retry = retry;
+    if (priority !== undefined) updates.priority = priority;
+    if (concurrency !== undefined) updates.concurrency = concurrency;
     // Update nextRunAt only if runAt is provided
     if (runAt) {
       updates.nextRunAt = new Date(runAt);
