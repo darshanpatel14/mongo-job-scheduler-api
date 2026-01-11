@@ -186,7 +186,8 @@ app.post("/jobs", async (req, res) => {
 app.put("/jobs/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { data, repeat, runAt, retry, priority, concurrency } = req.body;
+    const { data, repeat, runAt, retry, priority, concurrency, dedupeKey } =
+      req.body;
 
     // Check if job exists
     const existingJob = await scheduler.getJob(new ObjectId(id));
@@ -200,6 +201,7 @@ app.put("/jobs/:id", async (req, res) => {
     if (retry !== undefined) updates.retry = retry;
     if (priority !== undefined) updates.priority = priority;
     if (concurrency !== undefined) updates.concurrency = concurrency;
+    if (dedupeKey !== undefined) updates.dedupeKey = dedupeKey;
     // Update nextRunAt only if runAt is provided
     if (runAt) {
       updates.nextRunAt = new Date(runAt);
